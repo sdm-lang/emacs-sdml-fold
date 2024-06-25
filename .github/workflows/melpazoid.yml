@@ -30,7 +30,7 @@ jobs:
         git clone https://github.com/riscy/melpazoid.git ~/melpazoid
         pip install ~/melpazoid
 
-    - Name: Check Package
+    - name: Check Package
       env:
         LOCAL_REPO: ${{ github.workspace }}
         RECIPE: (sdml-fold :fetcher github :repo "sdm-lang/emacs-sdml-fold" :files ("sdml-fold.el"))
