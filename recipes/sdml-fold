@@ -1,3 +1,1 @@
-(sdml-fold :fetcher github
-           :repo "sdm-lang/emacs-sdml-fold"
-           :files ("sdml-fold.el"))
+(sdml-fold :repo "sdm-lang/emacs-sdml-fold" :fetcher github)

@@ -31,7 +31,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Lint the project
-      run: |
+      run:
         eldev $ELDEV_ARGS lint
 
     - name: Test the project
@@ -40,5 +40,5 @@ jobs:
         eldev $ELDEV_ARGS compile --warnings-as-errors
 
     - name: Ensure that copyright notices are up-to-date
-      run: |
+      run:
        eldev $ELDEV_ARGS -p doctor up-to-date-copyright --all-tests

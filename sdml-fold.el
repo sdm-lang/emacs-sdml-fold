@@ -1,15 +1,15 @@
 ;;; sdml-fold.el --- Code folding for SDML -*- lexical-binding: t; -*-
 
-;; Copyright (c) 2023, 2024 Simon Johnston
-
 ;; Author: Simon Johnston <johnstonskj@gmail.com>
-;; Version: 0.1.8snapshot
-;; Package-Requires: ((emacs "28.2") (tree-sitter "0.18.0") (sdml-mode "0.1.6"))
+;; Version: 0.1.5
+;; Package-Requires: ((emacs "28.2") (sdml-mode "0.1.8"))
 ;; URL: https://github.com/johnstonskj/emacs-sdml-mode
 ;; Keywords: languages tools
 
 ;;; License:
 
+;; Copyright (c) 2023, 2024 Simon Johnston
+;;
 ;; Licensed under the Apache License, Version 2.0 (the "License");
 ;; you may not use this file except in compliance with the License.
 ;; You may obtain a copy of the License at
@@ -25,6 +25,17 @@
 ;;; Commentary:
 
 ;; This package provides a tree-sitter based fold mode for SDML.
+;;
+
+;; Installation
+;;
+;; Install the `ts-fold' library first which is a manual process unfortunately.
+;;
+;; See https://github.com/emacs-tree-sitter/ts-fold
+;;
+;; `(require 'sdml-mode)'
+;; `(require 'ts-fold)'
+;; `(require 'sdml-fold)'
 ;;
 
 ;; Folding
@@ -44,6 +55,7 @@
 ;; Fold Indicators
 ;;
 ;; This is only enabled if folding is enabled (see above) and running in GUI mode.
+;; To enable, put `(require 'ts-fold-indicators)' before requiring `sdml-fold'.
 ;;
 ;; To switch to left/right fringe: (Default is left-fringe)
 ;;
@@ -57,6 +69,12 @@
 ;;; Code:
 
 (require 'sdml-mode)
+
+(declare-function ts-fold-mode "ts-fold" ())
+(declare-function ts-fold-line-comment-mode "ts-fold" ())
+(declare-function ts-fold-indicators-mode "ts-fold-indicators" (toggle))
+
+(defvar ts-fold-range-alist)
 
 (when (featurep 'ts-fold)
   ;; The package `ts-fold' must be installed and required PRIOR to this
@@ -98,23 +116,29 @@
   (define-key sdml-mode-map (kbd "C-c C-s .") 'ts-fold-toggle)
 
   (add-to-list 'ts-fold-range-alist
-               `(sdml-mode . ,sdml-fold-definitions))
+               `(sdml-mode . ,sdml-fold-definitions)))
 
-  (defun sdml-fold-setup ()
-    "Setup SDML folding rules using ts-fold."
+;; --------------------------------------------------------------------------
+;; Folding Minor Mode
+;; --------------------------------------------------------------------------
+
+;;;###autoload
+(define-minor-mode sdml-fold-mode
+  "Add code folding to the `sdml-mode' major mode."
+  :group 'sdml
+  :tag "Enable SDML code folding minor mode"
+  :lighter nil
+  (cond
+   ((featurep 'ts-fold)
     (ts-fold-mode)
     (ts-fold-line-comment-mode)
+    (when (and window-system (functionp 'ts-fold-indicators-mode))
+      (ts-fold-indicators-mode 1)))
+   (t
+    (message "Warning: sdml-fold-setup not enabled, no ts-fold"))))
 
-    (when (and window-system (featurep ts-fold-indicators))
-      (ts-fold-indicators-mode))))
-
-(when (not (featurep 'ts-fold))
-  ;; If no ts-fold found, then create a dummy setup function.
-  (defun sdml-fold-setup ()
-    (message "Warning: sdml-fold-setup not enabled, no ts-fold")))
-
-(declare-function sdml-fold-setup "sdml-fold" ())
-(add-hook 'sdml-mode-hook #'sdml-fold-setup)
+;;;###autoload
+(add-hook 'sdml-mode-hook 'sdml-fold-mode)
 
 (provide 'sdml-fold)
 
