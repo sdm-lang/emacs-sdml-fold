@@ -24,7 +24,8 @@
 
 ;;; Commentary:
 
-;; This package provides a tree-sitter based fold mode for SDML.
+;; This package provides a tree-sitter based fold mode for SDML - the
+;; Simple Domain Modeling Language (https://sdml.io).
 ;;
 
 ;; Installation
@@ -33,9 +34,9 @@
 ;;
 ;; See https://github.com/emacs-tree-sitter/ts-fold
 ;;
-;; `(require 'sdml-mode)'
+;; `(use-package 'sdml-mode)'
 ;; `(require 'ts-fold)'
-;; `(require 'sdml-fold)'
+;; `(use-package 'sdml-fold :after (sdml-mode ts-fold))'
 ;;
 
 ;; Folding

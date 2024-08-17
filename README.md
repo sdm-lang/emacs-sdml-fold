@@ -2,9 +2,8 @@
 
 ![SDML Logo Text](https://raw.githubusercontent.com/sdm-lang/.github/main/profile/horizontal-text.svg)
 
-This package provides an Emacs tree-sitter based minor mode for SDML - the
-[Simple Domain Modeling Language](https://github.com/johnstonskj/tree-sitter-sdml). This mode provides code-folding features for
-the `sdml-mode` package.
+This package provides code-folding features for SDML - the
+[Simple Domain Modeling Language](https://github.com/johnstonskj/tree-sitter-sdml) buffers.
 
 ## Installing
 
