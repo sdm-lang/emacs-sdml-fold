@@ -136,10 +136,7 @@
     (when (and window-system (functionp 'ts-fold-indicators-mode))
       (ts-fold-indicators-mode 1)))
    (t
-    (message "Warning: sdml-fold-setup not enabled, no ts-fold"))))
-
-;;;###autoload
-(add-hook 'sdml-mode-hook 'sdml-fold-mode)
+    (message "Warning: sdml-fold-mode not enabled, no ts-fold"))))
 
 (provide 'sdml-fold)
 

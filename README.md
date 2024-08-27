@@ -7,24 +7,22 @@ This package provides code-folding features for SDML - the
 
 ## Installing
 
-Currently the package is not published and so installation has to be done
-manually. You will also need to install the base `sdml-mode` first.
+Install the `ts-fold` library (See https://github.com/emacs-tree-sitter/ts-fold)
+first which is a manual process unfortunately.
 
-### Install manually
-
-First clone the Git repository to a local path.
-
-```bash
-    git clone https://github.com/johnstonskj/emacs-sdml-fold.git
-```
-
-The following uses `use-package` but any equivalent package manager should work.
+Install is easiest from MELPA, here's how with `use-package`. Note the hook clause
+to ensure this minor mode is always enabled for SDML source files.
 
 ```elisp
+(use-package ts-fold
+  :load-path "path/to/install")
+
 (use-package sdml-fold
-  :after sdml-mode
-  :load-path "/path/to/repo")
+  :after (ts-fold sdml-mode)
+  :hook (sdml-mode . sdml-fold-mode)
 ```
+
+Or, interactively; `M-x package-install RET sdml-ispell RET`
 
 ### Usage
 
